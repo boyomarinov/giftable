@@ -1,30 +1,30 @@
 (function(global) {  
-    var WeatherViewModel,
+    var PeopleViewModel,
         app = global.app = global.app || {};
     
-    WeatherViewModel = kendo.data.ObservableObject.extend({
-        weatherDataSource: null,
+    PeopleViewModel = kendo.data.ObservableObject.extend({
+        peopleDataSource: null,
         
         init: function () {
-            var that = this,
+            var self = this,
                 dataSource;
             
-            kendo.data.ObservableObject.fn.init.apply(that, []);
+            kendo.data.ObservableObject.fn.init.apply(self, []);
             
             dataSource = new kendo.data.DataSource({
                 transport: {
                     read: {
-                        url: "data/weather.json",
+                        url: "data/people.json",
                         dataType: "json"
                     }
                 }
             });
             
-            that.set("weatherDataSource", dataSource);           
+            self.set("peopleDataSource", dataSource);           
         }        
     });  
     
-    app.weatherService = {
-        viewModel: new WeatherViewModel()
+    app.peopleService = {
+        viewModel: new PeopleViewModel()
     };
 })(window);

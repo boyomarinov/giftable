@@ -1,28 +1,38 @@
 (function (global) {
+    var persister = persisters.get("http://localhost:30765/Simulator/api/")
     var LoginViewModel,
-        app = global.app = global.app || {};
+    app = global.app = global.app || {};
 
     LoginViewModel = kendo.data.ObservableObject.extend({
-        isLoggedIn: false,
+        /* isLoggedIn: false,
         username: "",
-        password: "",
+        password: "",*/
+        /*  var isLoggedIn = localStorage.getItem("isLoggedIn");
+        var username = localStorage.getItem("username");
+        var accessToken = localStorage.getItem("accessToken");*/
+        
 
-        onLogin: function () {
-            var that = this,
-                username = that.get("username").trim(),
-                password = that.get("password").trim();
+        login: function () {
+            var self = this;
+            var username = self.get("username").trim();
+            var password = self.get("password").trim();
 
             if (username === "" || password === "") {
                 navigator.notification.alert("Both fields are required!",
-                    function () { }, "Login failed", 'OK');
+                                             function () {
+                                             }, "Login failed", 'OK');
 
                 return;
             }
-
-            that.set("isLoggedIn", true);
+            
+            persister.users.login(username, password)
+            .then(function() {
+                app.navigate('#tabstrip-home');
+            });
+            //self.set("isLoggedIn", true);
         },
 
-        onLogout: function () {
+       /* onLogout: function () {
             var that = this;
 
             that.clearForm();
@@ -34,7 +44,7 @@
 
             that.set("username", "");
             that.set("password", "");
-        }
+        }*/
     });
 
     app.loginService = {
