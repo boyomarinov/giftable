@@ -11,28 +11,51 @@
         if (device.platform == 'Android') {
             document.getElementById("backButton").style.visibility = "hidden";
         }
-       
-        //handle if user is logged in 
-        /*var persister = persisters.get("http://giftable.apphb.com/api/");
-        if(persister.users.isLoggedIn()){
-        app.navigate("#tabstrip-home");
-        }else{
-        app.navigate("views/login.html#login-view");
-        }*/
-        var persister = persisters.get("http://localhost:30765/api/");
-        app.login = {
-            check:function() {
-                if (persister.users.isLoggedIn()) {
-                    app.application.navigate("views/people.html#people-view");
-                    console.log("logged in");
-                }
-                else {
-                    app.application.navigate("#login-view");
-                    console.log("not logged in");
-                }
-            }        
-        }
+        
+        //get current user position in order to use it while adding a gift
+        navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    localStorage.setItem("latitudeNew", position.coords.latitude);
+                    localStorage.setItem("longitudeNew", position.coords.longitude); 
+                    localStorage.setItem("latitudeSuggest", position.coords.latitude);
+                    localStorage.setItem("longitudeSuggest", position.coords.longitude);
+                    
+                    that.setGiftsOnMap();
 
+                    that._isLoading = false;
+                    that.hideLoading();
+                },
+                function (error) {
+                    //default map coordinates                    
+                    position = new google.maps.LatLng(43.459336, -80.462494);
+                    map.panTo(position);
+
+                    that._isLoading = false;
+                    that.hideLoading();
+
+                    navigator.notification.alert("Unable to determine current location. Cannot connect to GPS satellite.",
+                                                 function () {
+                                                 }, "Location failed", 'OK');
+                },
+                {
+                timeout: 30000,
+                enableHighAccuracy: true
+            });
+       
+        var persister = persisters.get();
+        
+        //za Don4o
+        (function() {
+            if (persister.users.isLoggedIn()) {
+                app.application.navigate("views/people.html#people-view");
+                //console.log("logged in");
+            }
+            else {
+                app.application.navigate("#login-view");
+                //console.log("not logged in");
+            }
+        }()) 
+        
         document.addEventListener("backbutton", function (e) {
             var view = app.application.view();
             navigator.notification.alert(view.id);
@@ -42,7 +65,6 @@
             }
             app.globalViewModel.viewModel.goBack(e);
         }, false);
-       
     }, false);
 
     app.changeSkin = function (e) {
@@ -59,14 +81,14 @@
     };
     
     document.addEventListener("offline", function () {
-        navigator.notification.alert("offline");
+        navigator.notification.alert("You do not have access to Internet. Try reconnecting again.");
     }, false);
     
     document.addEventListener("pause", function () {
-        navigator.notification.alert("pause");
+        //navigator.notification.alert("pause");
     }, false);
     
     document.addEventListener("resume", function () {
-        navigator.notification.alert("resume");
+        //navigator.notification.alert("resume");
     }, false);
 })(window);

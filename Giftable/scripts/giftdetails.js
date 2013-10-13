@@ -4,7 +4,7 @@ var app = app || {};
     function initialize(e) {
         var self = this;
         var itemId = e.view.params.id;
-        var persister = persisters.get("http://localhost:30765/api/");
+        var persister = persisters.get();
         persister.gifts.getGiftDetails(itemId)
         .then(function(data) {
             /*$("#gift-details-info").html(JSON.stringify(data));*/

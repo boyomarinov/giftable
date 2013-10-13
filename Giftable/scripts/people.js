@@ -1,7 +1,7 @@
 var app = app || {};
 
 (function(a) {
-    var persister = persisters.get("http://localhost:30765/api/");
+    var persister = persisters.get();
     
     function init(e) {
         persister.users.friends()

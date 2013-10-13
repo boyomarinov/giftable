@@ -37,7 +37,7 @@ window.persisters = (function () {
             });
         },
         logout: function () {
-            if (!accessToken) {
+            if (localStorage.getItem("accessToken") === "") {
                 navigator.notification.alert("User is not signed in!",
                                              function () {
                                              }, "Logout failed", 'OK');
@@ -49,8 +49,9 @@ window.persisters = (function () {
 
             accessToken = "";
             username = "";
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('username');
+            localStorage.setItem('accessToken', "");
+            localStorage.setItem('username', "");
+            console.log("logout");
             
             return httpRequest.putJSON(this.apiUrl + "users/logout", {}, headers);
         },
@@ -58,7 +59,7 @@ window.persisters = (function () {
             return localStorage.getItem('username');
         },
         isLoggedIn: function() {
-            return localStorage.getItem('username') !== "";
+            return localStorage.getItem('accessToken') !== "";
         },
         friends: function() {
             var headers = {
@@ -146,8 +147,8 @@ window.persisters = (function () {
     });
 
     return {
-        get: function (apiUrl) {
-            return new DataPersister(apiUrl);
+        get: function () {
+            return new DataPersister("http://giftable-webapi.apphb.com/api/");
         }
     };
 })();

@@ -1,6 +1,6 @@
 (function (global) {
     //var persister = persisters.get("http://giftable.apphb.com/api/")
-    var persister = persisters.get("http://localhost:30765/api/")
+    var persister = persisters.get();
     var RegisterViewModel,
     app = global.app = global.app || {};
 

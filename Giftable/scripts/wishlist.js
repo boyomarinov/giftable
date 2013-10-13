@@ -2,7 +2,7 @@ var app = app || {};
 
 (function(a) {
     function init(e) {
-        var persister = persisters.get("http://localhost:30765/api/");
+        var persister = persisters.get();
         
         persister.gifts.wishlist()
         .then(function(data) {

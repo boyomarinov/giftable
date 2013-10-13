@@ -1,6 +1,6 @@
 (function (global) {
     //var persister = persisters.get("http://giftable.apphb.com/api/")
-    var persister = persisters.get("http://localhost:30765/api/");
+    var persister = persisters.get();
     var LoginViewModel,
     app = global.app = global.app || {};
 
@@ -8,7 +8,7 @@
        
         isLoggedIn: localStorage.getItem("isLoggedIn") || false,
         username: localStorage.getItem("username") || "",
-        password: "password1",
+        password: "",
         accessToken: localStorage.getItem("accessToken"),
         
         login: function () {

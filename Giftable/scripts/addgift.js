@@ -1,6 +1,6 @@
 (function (global) {
     //var persister = persisters.get("http://giftable.apphb.com/api/")
-    var persister = persisters.get("http://localhost:30765/api/");
+    var persister = persisters.get();
     var NewGiftViewModel,
     app = global.app = global.app || {};
 
@@ -8,15 +8,15 @@
        
         titleNew: "",
         descriptionNew: "",
-        latitudeNew: "",
-        longitudeNew: "",
+        latitudeNew: localStorage.getItem("latitudeNew") || "",
+        longitudeNew: localStorage.getItem("longitudeNew") || "",
         imageNew: "",
         urlNew: "",
         
         titleSuggest: "",
         descriptionSuggest: "",
-        latitudeSuggest: "",
-        longitudeSuggest: "",
+        latitudeSuggest: localStorage.getItem("latitudeSuggest") || "",
+        longitudeSuggest: localStorage.getItem("longitudeSuggest") || "",
         imageSuggest: "",
         urlSuggest: "",
         suggestedFor: "",

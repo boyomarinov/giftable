@@ -3,7 +3,7 @@
     geocoder,
     LocationViewModel,
     app = global.app = global.app || {},
-    persister = persisters.get("http://localhost:30765/api/");
+    persister = persisters.get();
 
     LocationViewModel = kendo.data.ObservableObject.extend({
         _lastMarker: null,
@@ -132,7 +132,7 @@
     app.locationService = {
         initLocation: function () {
             var mapOptions = {
-                zoom: 15,
+                zoom: 4,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 zoomControl: true,
                 zoomControlOptions: {

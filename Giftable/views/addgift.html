@@ -125,7 +125,7 @@
             index: 0
         });
         
-        var frpersister = persisters.get("http://localhost:30765/api/");
+        var frpersister = persisters.get();
         frpersister.users.friends()
         .then(function(friends) {
             $("#friends-dropdown").kendoDropDownList({

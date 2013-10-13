@@ -37,9 +37,7 @@
              data-role="view"  
              data-title="Login" 
              data-model="app.loginService.viewModel"
-             data-layout="default"
-             data-show="app.loginService.checkLogin">
-
+             data-layout="default">
             <div class="view-content">
                 <div class="logo"></div>
                 <!--  <h1 class="welcome" data-bind="visible: isLoggedIn">
@@ -78,7 +76,6 @@
                 <li class="b-top"><a data-role="button" href="views/signupView.html" class="btn-signup btn-big">Sign up</a> </li>
                 </ol>-->
             </div>
-
         </div>
 
         <!--Blank layout-->
@@ -91,7 +88,7 @@
             <div data-role="header">
                 <div data-role="navbar">
                     <span data-role="view-title"></span>
-                    <a class="button" data-align="right" id="logoutButton" >Logout</a>
+                    <a class="button" data-align="right" data-role="button" onclick="logout()" >Logout</a>
                 </div>
             </div>
 
@@ -144,25 +141,36 @@
 
         <!--New gift tab-page layout-->
         <!--<div data-role="layout" data-id="newgift-layout" >
-            <div data-role="header">
-                <div data-role="navbar">
-                    <span data-role="view-title"></span>
-                </div>
-                <ul id="newgift-buttongroup" class="select-group" data-role="buttongroup">
-                    <li data-target="views/addgift.html#addgift-view">Add gift</li>
-                    <li data-target="views/addgift.html#suggestgift-view">Suggest gift</li>
-                </ul>
-            </div>
+        <div data-role="header">
+        <div data-role="navbar">
+        <span data-role="view-title"></span>
+        </div>
+        <ul id="newgift-buttongroup" class="select-group" data-role="buttongroup">
+        <li data-target="views/addgift.html#addgift-view">Add gift</li>
+        <li data-target="views/addgift.html#suggestgift-view">Suggest gift</li>
+        </ul>
+        </div>
 
-            <div data-role="footer">
-                <div data-role="tabstrip">
-                    <a href="views/people.html#people-view" data-icon="bookmarks">People</a>
-                    <a href="views/wishlist.html#wishlist-view" data-icon="favorites">Wishlist</a>
-                    <a href="views/addgift.html#addgift-view" data-icon="add">Add gift</a>
-                    <a href="views/location.html#tabstrip-location" data-icon="globe">Locate gifts</a>
-                </div>
-            </div>
+        <div data-role="footer">
+        <div data-role="tabstrip">
+        <a href="views/people.html#people-view" data-icon="bookmarks">People</a>
+        <a href="views/wishlist.html#wishlist-view" data-icon="favorites">Wishlist</a>
+        <a href="views/addgift.html#addgift-view" data-icon="add">Add gift</a>
+        <a href="views/location.html#tabstrip-location" data-icon="globe">Locate gifts</a>
+        </div>
+        </div>
         </div>-->
-        
+        <script>
+            var persister = persisters.get();
+            
+            function logout() {
+                persister.users.logout()
+                .then(function(data) {
+                    app.application.navigate("views/login.html#login-view");
+                }, function(err) {
+                    console.log(err);
+                });
+            }
+        </script>
     </body>
 </html>
