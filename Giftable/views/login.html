@@ -1,5 +1,48 @@
-<div id="login-view"
-    data-id="login-view"
-    data-layout="">
-    
+<!--Login-->
+<div id="login-view" 
+     data-id="login-view"
+     data-role="view"  
+     data-title="Login" 
+     data-model="app.loginService.viewModel"
+     data-layout="tabstrip-layout"
+     data-show="app.login.check">
+    <div class="view-content">
+        <div class="logo"></div>
+        <!--  <h1 class="welcome" data-bind="visible: isLoggedIn">
+        Welcome, <span data-bind="text: username"></span>!
+        </h1>-->
+
+        <ul data-role="listview" data-style="inset">
+            <li>
+                <label>
+                    Username
+                    <input type="text" data-bind="value: username"/>
+                </label>
+            </li>
+            <li>
+                <label>
+                    Password
+                    <input type="password" data-bind="value: password" />
+                </label>
+            </li>
+        </ul>
+
+        <div class="buttonArea">
+            <a id="login" data-role="button" data-bind="click: login" class="login-button">Login</a>
+            <a id="signup" data-role="button" data-bind="click: register" class="login-button">Register</a>
+        </div>
+
+        <!--<ol class="group-wrp">
+        <li>
+        <span data-role="touch" data-bind="events: { tap: login }" style="display: inline-block">
+        <a data-role="button" class="btn-login btn-big">Login</a>
+        </span>
+        <span data-role="touch" data-bind="events: { tap: loginWithFacebook }" style="display: inline-block">
+        <a data-role="button" class="btn-login-fb btn-big">Login</a>
+        </span>
+        </li>
+        <li class="b-top"><a data-role="button" href="views/signupView.html" class="btn-signup btn-big">Sign up</a> </li>
+        </ol>-->
+    </div>
+
 </div>

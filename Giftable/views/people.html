@@ -1,0 +1,30 @@
+<!--<div id="people-view" 
+data-id="people-view"
+data-role="view"
+data-title="People"
+data-layout="tabstrip-layout"
+data-model="app.peopleService.viewModel">
+<ul class="contacts-list" 
+data-role="listview" 
+data-bind="source: peopleDataSource" 
+data-template="people-list-template">
+</ul>
+</div>
+-->
+
+<div data-role="view" 
+     data-id="people-view"
+     data-role="view"
+     data-title="People"
+     data-show="app.people.init"
+     data-layout="home-layout">
+
+    <ul id="custom-people-listview" data-style="inset"></ul>
+</div>
+
+<script type="text/x-kendo-tmpl" id="people-list-template">
+    <a>
+        <span class="listViewImage" style="background-image: url('https://cdn1.iconfinder.com/data/icons/basicset/user_64.png')"></span>
+        <span>#: username #</span>
+    </a>
+</script>

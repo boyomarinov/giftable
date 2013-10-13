@@ -4,40 +4,46 @@
         <title></title>
         <meta charset="utf-8" />
         <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+        <link href="styles/kendo.common.min.css" rel="stylesheet" />
+        <link href="styles/kendo.default.min.css" rel="stylesheet" />
         <link href="styles/main.css" rel="stylesheet" />
 
         <script src="cordova.js"></script>
         <script src="kendo/js/jquery.min.js"></script>
         <script src="kendo/js/kendo.mobile.min.js"></script>
+        <script src="kendo/js/kendo.all.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-        
-        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
-        <script src="scripts/libraries/rsvp.min.js"></script>        
-        <script src="scripts/libraries/http-requester.js"></script>        
-        <script src="scripts/app/class.js"></script>        
-        <script src="scripts/app/persister.js"></script>        
 
-        <script src="scripts/login.js"></script>
-        <script src="scripts/location.js"></script>
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
+        <script src="scripts/libraries/rsvp.min.js"></script>
+        <script src="scripts/libraries/http-requester.js"></script>
+        <script src="scripts/app/class.js"></script>
+        <script src="scripts/app/persister.js"></script>
+
         <script src="scripts/app.js"></script>
+        <script src="scripts/login.js"></script>
+        <script src="scripts/register.js"></script>
+        <script src="scripts/location.js"></script>
         <script src="scripts/people.js"></script>
-        <script src="scripts/main.js"></script>
+        <script src="scripts/wishlist.js"></script>
+        <script src="scripts/giftdetails.js"></script>
+        <script src="scripts/addgift.js"></script>
 
     </head>
     <body>
-        
-
         <!--Login-->
         <div id="login-view" 
+             data-id="login-view"
              data-role="view"  
              data-title="Login" 
              data-model="app.loginService.viewModel"
-             data-layout="default">
+             data-layout="default"
+             data-show="app.loginService.checkLogin">
 
             <div class="view-content">
                 <div class="logo"></div>
-              <!--  <h1 class="welcome" data-bind="visible: isLoggedIn">
-                    Welcome, <span data-bind="text: username"></span>!
+                <!--  <h1 class="welcome" data-bind="visible: isLoggedIn">
+                Welcome, <span data-bind="text: username"></span>!
                 </h1>-->
 
                 <ul data-role="listview" data-style="inset">
@@ -57,88 +63,106 @@
 
                 <div class="buttonArea">
                     <a id="login" data-role="button" data-bind="click: login" class="login-button">Login</a>
-                    <a id="signup" data-role="button" data-bind="click: signup" class="login-button">Signup</a>
+                    <a id="signup" data-role="button" data-bind="click: register" class="login-button">Register</a>
                 </div>
-                
+
                 <!--<ol class="group-wrp">
                 <li>
-                    <span data-role="touch" data-bind="events: { tap: login }" style="display: inline-block">
-                        <a data-role="button" class="btn-login btn-big">Login</a>
-                    </span>
-                    <span data-role="touch" data-bind="events: { tap: loginWithFacebook }" style="display: inline-block">
-                        <a data-role="button" class="btn-login-fb btn-big">Login</a>
-                    </span>
+                <span data-role="touch" data-bind="events: { tap: login }" style="display: inline-block">
+                <a data-role="button" class="btn-login btn-big">Login</a>
+                </span>
+                <span data-role="touch" data-bind="events: { tap: loginWithFacebook }" style="display: inline-block">
+                <a data-role="button" class="btn-login-fb btn-big">Login</a>
+                </span>
                 </li>
                 <li class="b-top"><a data-role="button" href="views/signupView.html" class="btn-signup btn-big">Sign up</a> </li>
-            </ol>-->
+                </ol>-->
             </div>
 
         </div>
-        
-        <!--Home-->
-        <div id="tabstrip-home" 
-             data-role="view"  
-             data-title="Home">
-            <div class="view-content">
-                <h1>Welcome!</h1>
-                <a id="skin-change" data-role="button" data-click="app.changeSkin">Flat</a>
-                <p>
-                    Icenium&trade; enables you to build cross-platform device applications regardless of your
-                    development platform by combining the convenience of a local development toolset with the
-                    power and flexibility of the cloud.
-                </p>
-                <div class="img"></div>
-            </div>
-        </div>
 
-        <!--Location-->
-        <div id="tabstrip-location" 
-             data-role="view"  
-             data-title="Location" 
-             data-init="app.locationService.initLocation" 
-             data-show="app.locationService.show" 
-             data-hide="app.locationService.hide" 
-             data-model="app.locationService.viewModel" 
-             data-stretch="true">
-
-            <div id="map-search-wrap">
-                <button id="map-navigate-home" data-bind="click: onNavigateHome"></button>
-                <form onsubmit="return false;">
-                    <input id="map-address" type="search" data-bind="value: address" placeholder="Address"/>
-                    <input id="map-search" type="submit" value="" data-bind="click: onSearchAddress" />
-                </form>
-            </div>
-            <div id="map-canvas"></div>
-
-        </div>
-
+        <!--Blank layout-->
         <div data-role="layout" data-id="default">
-            
-        </div>
-        
-        <!--Layout-->
-        <div data-role="layout" data-id="tabstrip-layout" >
-            <!--<div data-role="header">
-                <div data-role="navbar">
-                    <a class="nav-button" data-align="left" id="backButton" data-role="backbutton">Back</a>
-                    <span data-role="view-title"></span>
-                </div>
-            </div>-->
 
-            <!--Footer-->
+        </div>
+
+        <!--Home-page layout-->
+        <div data-role="layout" data-id="home-layout">
+            <div data-role="header">
+                <div data-role="navbar">
+                    <span data-role="view-title"></span>
+                    <a class="button" data-align="right" id="logoutButton" >Logout</a>
+                </div>
+            </div>
+
             <div data-role="footer">
                 <div data-role="tabstrip">
-                    <a href="#tabstrip-home" data-icon="home">Home</a>
-                    <a href="views/peopleView.html#people-view" data-icon="contacts">People</a>
-                    <a href="#tabstrip-login" data-icon="contacts">People</a>
-                    <a href="#tabstrip-location" data-icon="search">Location</a>
+                    <a href="views/people.html#people-view" data-icon="bookmarks">People</a>
+                    <a href="views/wishlist.html#wishlist-view" data-icon="favorites">Wishlist</a>
+                    <a href="views/addgift.html#addgift-view" data-icon="add">Add gift</a>
+                    <a href="views/location.html#tabstrip-location" data-icon="globe">Locate gifts</a>
                 </div>
             </div>
         </div>
+
+        <!--Normal tab-page layout-->
+        <div data-role="layout" data-id="tabstrip-layout" >
+            <div data-role="header">
+                <div data-role="navbar">
+                    <span data-role="view-title"></span>
+                </div>
+            </div>
+
+            <div data-role="footer">
+                <div data-role="tabstrip">
+                    <a href="views/people.html#people-view" data-icon="bookmarks">People</a>
+                    <a href="views/wishlist.html#wishlist-view" data-icon="favorites">Wishlist</a>
+                    <a href="views/addgift.html#addgift-view" data-icon="add">Add gift</a>
+                    <a href="views/location.html#tabstrip-location" data-icon="globe">Locate gifts</a>
+                </div>
+            </div>
+        </div>
+
+        <!--Detailed page layout-->
+        <div data-role="layout" data-id="detailed-layout" >
+            <div data-role="header">
+                <div data-role="navbar">
+                    <a class="button" data-align="left" id="backButton" data-role="backbutton">Back</a>
+                    <span data-role="view-title"></span>
+                </div>
+            </div>
+
+            <div data-role="footer">
+                <div data-role="tabstrip">
+                    <a href="views/people.html#people-view" data-icon="bookmarks">People</a>
+                    <a href="views/wishlist.html#wishlist-view" data-icon="favorites">Wishlist</a>
+                    <a href="views/addgift.html#addgift-view" data-icon="add">Add gift</a>
+                    <a href="views/location.html#tabstrip-location" data-icon="globe">Locate gifts</a>
+                </div>
+            </div>
+        </div>
+
+        <!--New gift tab-page layout-->
+        <!--<div data-role="layout" data-id="newgift-layout" >
+            <div data-role="header">
+                <div data-role="navbar">
+                    <span data-role="view-title"></span>
+                </div>
+                <ul id="newgift-buttongroup" class="select-group" data-role="buttongroup">
+                    <li data-target="views/addgift.html#addgift-view">Add gift</li>
+                    <li data-target="views/addgift.html#suggestgift-view">Suggest gift</li>
+                </ul>
+            </div>
+
+            <div data-role="footer">
+                <div data-role="tabstrip">
+                    <a href="views/people.html#people-view" data-icon="bookmarks">People</a>
+                    <a href="views/wishlist.html#wishlist-view" data-icon="favorites">Wishlist</a>
+                    <a href="views/addgift.html#addgift-view" data-icon="add">Add gift</a>
+                    <a href="views/location.html#tabstrip-location" data-icon="globe">Locate gifts</a>
+                </div>
+            </div>
+        </div>-->
         
-        <!--<script data-main="scripts/main.js" src="scripts/libraries/require.js"></script>-->
-        <script type="text/javascript">
-            //app.initialize();
-        </script>
     </body>
 </html>

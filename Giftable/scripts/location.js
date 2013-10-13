@@ -1,8 +1,9 @@
 (function (global) {
     var map,
-        geocoder,
-        LocationViewModel,
-        app = global.app = global.app || {};
+    geocoder,
+    LocationViewModel,
+    app = global.app = global.app || {},
+    persister = persisters.get("http://localhost:30765/api/");
 
     LocationViewModel = kendo.data.ObservableObject.extend({
         _lastMarker: null,
@@ -11,7 +12,7 @@
 
         onNavigateHome: function () {
             var that = this,
-                position;
+            position;
 
             that._isLoading = true;
             that.showLoading();
@@ -21,6 +22,8 @@
                     position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                     map.panTo(position);
                     that._putMarker(position);
+                    
+                    that.setGiftsOnMap();
 
                     that._isLoading = false;
                     that.hideLoading();
@@ -34,13 +37,14 @@
                     that.hideLoading();
 
                     navigator.notification.alert("Unable to determine current location. Cannot connect to GPS satellite.",
-                        function () { }, "Location failed", 'OK');
+                                                 function () {
+                                                 }, "Location failed", 'OK');
                 },
                 {
-                    timeout: 30000,
-                    enableHighAccuracy: true
-                }
-            );
+                timeout: 30000,
+                enableHighAccuracy: true
+            }
+                );
         },
 
         onSearchAddress: function () {
@@ -48,12 +52,13 @@
 
             geocoder.geocode(
                 {
-                    'address': that.get("address")
-                },
+                'address': that.get("address")
+            },
                 function (results, status) {
                     if (status !== google.maps.GeocoderStatus.OK) {
                         navigator.notification.alert("Unable to find address.",
-                            function () { }, "Search failed", 'OK');
+                                                     function () {
+                                                     }, "Search failed", 'OK');
 
                         return;
                     }
@@ -84,22 +89,59 @@
                 map: map,
                 position: position
             });
+        },
+        
+        myPutMarker: function(gift) {
+            var self = this;
+            
+            
+            var contentString = "<h3>" + gift.name + "</h3>" + 
+                                "<div>" + gift.description + "</div>" + 
+                                "<div>Latitude: " + gift.latitude + "</div><div>Longitude: " + gift.longitude + "</div>" + 
+                                "<div><a href=\"" + gift.url + "\">Link</a></div>"
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+            
+            var currPosition = new google.maps.LatLng(gift.latitude, gift.longitude);
+            
+            var marker = new google.maps.Marker({
+                position: currPosition,
+                map: map,
+                title: "bla"
+            });
+            
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map, marker);
+            });
+        },
+        
+        setGiftsOnMap: function() {
+            var self = this;
+            persister.gifts.getLocatedGifts()
+            .then(function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    self.myPutMarker(data[i]);
+                }
+            }, function(err) {
+                console.log(err);
+            });
         }
     });
 
     app.locationService = {
         initLocation: function () {
             var mapOptions = {
-                    zoom: 15,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP,
-                    zoomControl: true,
-                    zoomControlOptions: {
-                        position: google.maps.ControlPosition.LEFT_BOTTOM
-                    },
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                zoomControl: true,
+                zoomControlOptions: {
+                    position: google.maps.ControlPosition.LEFT_BOTTOM
+                },
     
-                    mapTypeControl: false,
-                    streetViewControl: false
-                };
+                mapTypeControl: false,
+                streetViewControl: false
+            };
 
             map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);            
             geocoder = new google.maps.Geocoder();

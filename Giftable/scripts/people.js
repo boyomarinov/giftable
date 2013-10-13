@@ -1,30 +1,32 @@
-(function(global) {  
-    var PeopleViewModel,
-        app = global.app = global.app || {};
+var app = app || {};
+
+(function(a) {
+    var persister = persisters.get("http://localhost:30765/api/");
     
-    PeopleViewModel = kendo.data.ObservableObject.extend({
-        peopleDataSource: null,
-        
-        init: function () {
-            var self = this,
-                dataSource;
-            
-            kendo.data.ObservableObject.fn.init.apply(self, []);
-            
-            dataSource = new kendo.data.DataSource({
-                transport: {
-                    read: {
-                        url: "data/people.json",
-                        dataType: "json"
-                    }
-                }
+    function init(e) {
+        persister.users.friends()
+        .then(function(data) {
+            console.log(data);
+            $("#custom-people-listview").kendoMobileListView({
+                dataSource: data,
+                template: $("#people-list-template").html()
             });
-            
-            self.set("peopleDataSource", dataSource);           
-        }        
-    });  
+        }, function(error) {
+            console.log(error);
+        })
+    }   
     
-    app.peopleService = {
-        viewModel: new PeopleViewModel()
+    function logout() {
+        persister.users.logout()
+        .then(function(data){
+            app.application.navigate("views/login.html#login-view");
+        }, function(err){
+            console.log(err);
+        });
+    }
+    
+    a.people = {
+        init:init,
+        logout: logout
     };
-})(window);
+}(app));

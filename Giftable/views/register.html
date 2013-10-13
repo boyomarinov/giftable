@@ -1,9 +1,41 @@
-<!DOCTYPE html>
+<!--Login-->
+<div id="register-view" 
+     data-role="view"  
+     data-title="Register" 
+     data-model="app.registerService.viewModel"
+     data-layout="default">
 
-<html>
-    <head>
-        <title></title>
-    </head>
-    <body>
-    </body>
-</html>
+    <div class="view-content">
+        <div class="logo"></div>
+        <!--  <h1 class="welcome" data-bind="visible: isLoggedIn">
+        Welcome, <span data-bind="text: username"></span>!
+        </h1>-->
+
+        <ul data-role="listview" data-style="inset">
+            <li>
+                <label>
+                    Username
+                    <input type="text" data-bind="value: username"/>
+                </label>
+            </li>
+            <li>
+                <label>
+                    Password
+                    <input type="password" data-bind="value: password" />
+                </label>
+            </li>
+            <li>
+                <label>
+                    Email
+                    <input type="text" data-bind="value: email"/>
+                </label>
+            </li>
+        </ul>
+
+        <div class="buttonArea">
+            <a id="signup" data-role="button" data-bind="click: register" class="login-button">Register</a>
+            <a id="signup" data-role="button" data-bind="click: backToLogin" class="login-button">Back</a>
+            <a></a>
+        </div>
+    </div>
+</div>

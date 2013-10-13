@@ -3,11 +3,35 @@
     app = global.app = global.app || {};
 
     document.addEventListener("deviceready", function () {
-        app.application = new kendo.mobile.Application(document.body, { layout: "tabstrip-layout" });
+        //app.application = new kendo.mobile.Application(document.body, { layout: "tabstrip-layout" });
+        app.application = new kendo.mobile.Application(document.body);
         
-        //if (device.platform == 'Android') {
-            //document.getElementById("backButton").style.visibility = "hidden";
-        //}
+        var buttongroup = $("#newgift-buttongroup").kendoMobileButtonGroup();
+      
+        if (device.platform == 'Android') {
+            document.getElementById("backButton").style.visibility = "hidden";
+        }
+       
+        //handle if user is logged in 
+        /*var persister = persisters.get("http://giftable.apphb.com/api/");
+        if(persister.users.isLoggedIn()){
+        app.navigate("#tabstrip-home");
+        }else{
+        app.navigate("views/login.html#login-view");
+        }*/
+        var persister = persisters.get("http://localhost:30765/api/");
+        app.login = {
+            check:function() {
+                if (persister.users.isLoggedIn()) {
+                    app.application.navigate("views/people.html#people-view");
+                    console.log("logged in");
+                }
+                else {
+                    app.application.navigate("#login-view");
+                    console.log("not logged in");
+                }
+            }        
+        }
 
         document.addEventListener("backbutton", function (e) {
             var view = app.application.view();
@@ -18,13 +42,7 @@
             }
             app.globalViewModel.viewModel.goBack(e);
         }, false);
-        
-        /*var onDetected = function() {
-            navigator.notification.vibrate(300);
-            app.application.navigate("pages/feedbackPage/feedbackPage.html#feedbackPage-page")
-            navigator.notification.alert("shake it baby!");
-        }
-        shake.startWatch(onDetected);*/
+       
     }, false);
 
     app.changeSkin = function (e) {

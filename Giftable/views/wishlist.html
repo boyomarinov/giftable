@@ -1,0 +1,29 @@
+<!--<div id="wishlist-view" 
+data-id="wishlist-view"
+data-role="view"
+data-title="Wishlist"
+data-layout="tabstrip-layout"
+data-model="app.wishlistService.viewModel">
+<ul class="wishlist-list" 
+data-role="listview" 
+data-bind="source: wishlistDataSource" 
+data-template="wishlist-list-template">
+</ul>
+</div>-->
+
+<div data-role="view" 
+     id="wishlist-view"
+     data-id="wishlist-view"
+     data-title="Wishlist"
+     data-show="app.wishlist.init"
+     data-layout="tabstrip-layout">
+
+    <ul id="custom-wishlist-listview"></ul>
+</div>
+
+<script type="text/x-kendo-tmpl" id="wishlist-list-template">
+    <a href='views/giftdetails.html\\#gift-details?id=#: id #'>
+        <span class="listViewImage" style="background-image: url('data:image/jpeg;base64,#: image #')"></span>
+        <span>#: name #</span>
+    </a>
+</script>

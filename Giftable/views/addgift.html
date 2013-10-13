@@ -1,0 +1,141 @@
+<div id="newgift-view" 
+     data-id="newgift-view"
+     data-role="view"  
+     data-title="New gift" 
+     data-show="addGiftInit"
+     data-layout="tabstrip-layout"
+     data-model="app.NewGiftViewModel.viewModel">
+    <ul id="select-period" data-index="0">
+        <li>Add gift</li>
+        <li>Suggest gift</li>
+    </ul>
+
+    <ul data-role="listview" 
+        data-style="inset"
+        >
+        <li>
+            <label>
+                Title
+                <input type="text" data-bind="value: titleNew"/>
+            </label>
+        </li>
+        <li>
+            <label>
+                Description
+                <input type="text" data-bind="value: descriptionNew" />
+            </label>
+        </li>
+        <li>
+            <label>
+                Latitude
+                <input type="text" data-bind="value: latitudeNew" />
+            </label>
+        </li>
+        <li>
+            <label>
+                Longitude
+                <input type="text" data-bind="value: longitudeNew" />
+            </label>
+        </li>
+        <li>
+            <label>
+                Url
+                <input type="text" data-bind="value: urlNew" />
+            </label>
+        </li>
+        <li>
+            Camera
+            <div class="buttonArea">
+                <a id="capturePhoto" data-role="button" data-bind="click: capturePhotoForNew" class="capture-button">Take a photo</a>
+            </div>
+            <img id="image-preview-new" />
+        </li>
+        <li>
+            <div class="buttonArea">
+                <a id="login" data-role="button" data-bind="click: add" class="login-button">Add gift</a>
+            </div>
+        </li>
+    </ul>
+
+    <ul data-role="listview" 
+        data-style="inset"
+        style="display: none">
+        <li>
+            <label>
+                Title
+                <input type="text" data-bind="value: titleSuggest"/>
+            </label>
+        </li>
+        <li>
+            <label>
+                Description
+                <input type="text" data-bind="value: descriptionSuggest" />
+            </label>
+        </li>
+        <li>
+            <label>
+                Latitude
+                <input type="text" data-bind="value: latitudeSuggest" />
+            </label>
+        </li>
+        <li>
+            <label>
+                Longitude
+                <input type="text" data-bind="value: longitudeSuggest" />
+            </label>
+        </li>
+        <li>
+            <label>
+                Url
+                <input type="text" data-bind="value: urlSuggest" />
+            </label>
+        </li>
+        <li>
+        <li>
+            <label>
+                Suggested for
+                <input id="friends-dropdown" data-bind="value: suggestedFor" />
+            </label>
+        </li>
+        <li>
+            Camera
+            <div class="buttonArea">
+                <a id="capturePhoto" data-role="button" data-bind="click: capturePhotoForSuggest" class="capture-button">Take a photo</a>
+            </div>
+            <img id="image-preview-suggest" />
+        </li>
+        <li>
+            <div class="buttonArea">
+                <a id="suggestgift-button" data-role="button" data-bind="click: suggest" class="login-button">Suggest gift</a>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<script>
+    function addGiftInit() {
+        var listviews = this.element.find("ul.km-listview");
+
+        $("#select-period").kendoMobileButtonGroup({
+            select: function() {
+                listviews.hide()
+                .eq(this.selectedIndex)
+                .show();
+            },
+            index: 0
+        });
+        
+        var frpersister = persisters.get("http://localhost:30765/api/");
+        frpersister.users.friends()
+        .then(function(friends) {
+            $("#friends-dropdown").kendoDropDownList({
+                dataTextField: "username",
+                dataValueField: "username",
+                dataSource: friends
+            });
+        }, function(err) {
+            console.log(err);
+        });
+    }           
+</script>
+

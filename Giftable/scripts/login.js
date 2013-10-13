@@ -1,17 +1,16 @@
 (function (global) {
-    var persister = persisters.get("http://localhost:30765/Simulator/api/")
+    //var persister = persisters.get("http://giftable.apphb.com/api/")
+    var persister = persisters.get("http://localhost:30765/api/");
     var LoginViewModel,
     app = global.app = global.app || {};
 
     LoginViewModel = kendo.data.ObservableObject.extend({
-        /* isLoggedIn: false,
-        username: "",
-        password: "",*/
-        /*  var isLoggedIn = localStorage.getItem("isLoggedIn");
-        var username = localStorage.getItem("username");
-        var accessToken = localStorage.getItem("accessToken");*/
+       
+        isLoggedIn: localStorage.getItem("isLoggedIn") || false,
+        username: localStorage.getItem("username") || "",
+        password: "password1",
+        accessToken: localStorage.getItem("accessToken"),
         
-
         login: function () {
             var self = this;
             var username = self.get("username").trim();
@@ -27,27 +26,42 @@
             
             persister.users.login(username, password)
             .then(function() {
-                app.navigate('#tabstrip-home');
+                localStorage.setItem("username", username);
+                console.log(localStorage.getItem("accessToken"));
+                
+                app.application.navigate("views/people.html#people-view");
+            }, function(err) {
+                console.log(err);
             });
             //self.set("isLoggedIn", true);
         },
-
-       /* onLogout: function () {
-            var that = this;
-
-            that.clearForm();
-            that.set("isLoggedIn", false);
+        register: function() {
+            console.log(app);
+            app.application.navigate("views/register.html#register-view");
+        }
+        /* onLogout: function () {
+        var that = this;
+        that.clearForm();
+        that.set("isLoggedIn", false);
         },
-
         clearForm: function () {
-            var that = this;
-
-            that.set("username", "");
-            that.set("password", "");
+        var that = this;
+        that.set("username", "");
+        that.set("password", "");
         }*/
     });
 
     app.loginService = {
+      /*  checkLogin: function() {
+            if (persister.users.isLoggedIn()) {
+                app.application.navigate("views/people.html#people-view");
+                console.log("logged in");
+            }
+            else {
+                app.application.navigate("#login-view");
+                console.log("not logged in");
+            }
+        },*/
         viewModel: new LoginViewModel()
     };
 })(window);
