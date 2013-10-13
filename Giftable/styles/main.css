@@ -354,6 +354,12 @@ body, html
     font-size: 1.0em;
 }
 
+.personinfo-container{
+    margin: 10px;
+    font-size: 1.2em;
+}
+
+
 /* RETINA DISPLAY STYLES*/
 @media only screen and (-webkit-min-device-pixel-ratio: 2) , (min-resolution: 192dpi)
 {

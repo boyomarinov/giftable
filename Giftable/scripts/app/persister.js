@@ -67,6 +67,13 @@ window.persisters = (function () {
             };
             
             return httpRequest.getJSON(this.apiUrl + "users/friends", headers);
+        },
+        friendDetails: function(id) {
+             var headers = {
+                "X-accessToken": localStorage.getItem('accessToken')
+            };
+            
+            return httpRequest.getJSON(this.apiUrl + "users/friend-details?id=" + id, headers);
         }
     });
 

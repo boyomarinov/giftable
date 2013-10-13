@@ -1,0 +1,25 @@
+<div id="person-details"
+     data-id="person-details"
+     data-role="view"  
+     data-title="Person Details" 
+     data-layout="detailed-layout"
+     data-show="app.persondetails.init">
+    <div id="persondetails-container">
+        <h1 data-bind="text: username"></h1>
+        <div class="personinfo-container">
+            <strong>Email: </strong><span data-bind="text: email"></span>
+        </div>
+        <div class="personinfo-container">
+            <div class="buttonArea">
+                <a id="checkperson-button" data-role="button" data-bind="click: checkInContacts" class="login-button">Check if user is in Contacts</a>
+            </div>
+        </div>
+        <div>
+            <ul id="person-matched-contacts" data-style="inset"></ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/x-kendo-tmpl" id="matchedperson-template">
+    <span>#: displayName #</span>
+</script>
